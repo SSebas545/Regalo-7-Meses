@@ -168,6 +168,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inicializar con portada
     showSection('portada');
+    // --- Botones de "Siguiente" al final de cada página ---
+    const btnSiguientes = document.querySelectorAll('.btn-siguiente');
+    
+    btnSiguientes.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            
+            // Cambiar a la sección objetivo
+            showSection(targetId);
+            
+            // Actualizar el estado "activo" en el menú de navegación superior
+            navLinks.forEach(l => l.classList.remove('active'));
+            const correspondingLink = document.querySelector(`.nav-link[data-section="${targetId}"]`);
+            if (correspondingLink) {
+                correspondingLink.classList.add('active');
+            }
+            
+            // Subir suavemente al inicio de la página
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
 });
 
 // Soporte para tema oscuro (opcional)
@@ -187,3 +209,4 @@ document.addEventListener('auxclick', (e) => {
         e.preventDefault();
     }
 });
+
