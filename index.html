@@ -11,7 +11,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="logo">7️⃣ Meses</div>
+            <div class="logo">7️⃣ Meses Juntos</div>
             <button class="menu-toggle" id="menuToggle">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" data-section="portada" class="nav-link active">Inicio</a></li>
@@ -32,9 +32,32 @@
                 <div class="portada-content">
                     <h1 class="title-main">Felices 7 Meses</h1>
                     <p class="subtitle-main">Mi muchachita linda 💖</p>
-                    <div class="contador">
-                        <p>Juntos desde<br><span class="fecha-inicio">03 de Febrero 2026</span></p>
+                    
+                    <!-- Contador de tiempo dinámico -->
+                    <div class="contador-dinamico">
+                        <div class="tiempo-item">
+                            <span class="tiempo-numero" id="years">0</span>
+                            <span class="tiempo-label">Años</span>
+                        </div>
+                        <div class="separador">:</div>
+                        <div class="tiempo-item">
+                            <span class="tiempo-numero" id="months">0</span>
+                            <span class="tiempo-label">Meses</span>
+                        </div>
+                        <div class="separador">:</div>
+                        <div class="tiempo-item">
+                            <span class="tiempo-numero" id="days">0</span>
+                            <span class="tiempo-label">Días</span>
+                        </div>
+                        <div class="separador">:</div>
+                        <div class="tiempo-item">
+                            <span class="tiempo-numero" id="hours">0</span>
+                            <span class="tiempo-label">Horas</span>
+                        </div>
                     </div>
+
+                    <p class="subtexto-contador">Juntos desde <span class="fecha-inicio">03 de Febrero 2026</span></p>
+                    
                     <div class="flores-decorativas">
                         <span class="flor">🌷</span>
                         <span class="flor">🌷</span>
@@ -86,12 +109,17 @@
                     <div class="timeline-date">3 Febrero 2026</div>
                     <div class="timeline-content">
                         <h3>Oficialmente Nuestros ❤️</h3>
-                        <p>Desde este día, cada momento contigo es un regalo. Y hoy celebramos 7 meses de amor puro.</p>
+                        <p>Desde este día, cada momento contigo es un regalo. Y hoy celebramos nuestro amor puro.</p>
                     </div>
                 </div>
             </div>
-            <div class="next-section-container">
-                <button class="btn-siguiente" data-target="razones">Siguiente: Por Qué Te Amo ➔</button>
+            
+            <!-- Botón de siguiente mejorado -->
+            <div class="nav-buttons-container">
+                <button class="btn-siguiente" data-target="razones">
+                    <span class="btn-text">Siguiente: Por Qué Te Amo</span>
+                    <span class="btn-arrow">➔</span>
+                </button>
             </div>
         </section>
 
@@ -108,7 +136,7 @@
                 <div class="razon-card">
                     <div class="razon-icon">💭</div>
                     <h3>Nuestras Charlas</h3>
-                    <p>Aunque no entiendas del código y los jueguitos, escuchas cada cosa que te cuento con interés genuino.</p>
+                    <p>Aunque no entiendas del código y la música, escuchas cada cosa que te cuento con interés genuino.</p>
                 </div>
 
                 <div class="razon-card">
@@ -120,25 +148,25 @@
                 <div class="razon-card">
                     <div class="razon-icon">👸</div>
                     <h3>Tu Apoyo</h3>
-                    <p>Estoy súper orgulloso de tus logros, tu esfuerzo, y tus ganas. Eso es una de tus mayores virtudes.</p>
+                    <p>Estoy súper orgullosa de tus logros, tu esfuerzo, tu rebusque y tus ganas. Eso es especial.</p>
                 </div>
 
                 <div class="razon-card">
                     <div class="razon-icon">💕</div>
                     <h3>Tus Detalles</h3>
-                    <p>Los mensajitos, las cartas hechas con amor... cada detalle pequeño me enamora más.</p>
+                    <p>Los mensajitos, las flores de papel hechas con amor, la caballerosidad... cada detalle pequeño me enamora más.</p>
                 </div>
 
                 <div class="razon-card">
                     <div class="razon-icon">🎮</div>
                     <h3>Que Juegues Conmigo</h3>
-                    <p>Sé que los jueguitos te aburren, pero estas dispuesta a jugar solo porque me gustan. Eso es amor real.</p>
+                    <p>Sé que los jueguitos te aburren, pero lo haces solo porque sabes que me gustan. Eso es amor real.</p>
                 </div>
 
                 <div class="razon-card">
                     <div class="razon-icon">🎵</div>
                     <h3>Tu Conexión Conmigo</h3>
-                    <p>Escucho Danny, salsas, Alavaro Diaz y pienso en ti. Porque nuestras canciones son nuestras historias.</p>
+                    <p>Escucho Danny Ocean y pienso en vos. Porque nuestras canciones son nuestras historias.</p>
                 </div>
 
                 <div class="razon-card">
@@ -148,21 +176,18 @@
                 </div>
 
                 <div class="razon-card">
-                    <div class="razon-icon">💡</div>
-                    <h3>Eres mi inspiración</h3>
-                    <p>Desde el primer momento en que te vi, no podia entender lo increible que eras, incluso ahora sigo sin entenderlo y te veo como lo que quiero ser.</p>
-                </div>
-
-                <div class="razon-card">
                     <div class="razon-icon">💔</div>
                     <h3>En Los Malos Momentos</h3>
                     <p>Incluso en las discusiones, sigo sabiendo que eres la mujer con la que quiero pasar cada día de mi vida.</p>
                 </div>
-                
             </div>
-            </div>
-            <div class="next-section-container">
-                <button class="btn-siguiente" data-target="musica">Siguiente: Música ➔</button>
+            
+            <!-- Botón de siguiente mejorado -->
+            <div class="nav-buttons-container">
+                <button class="btn-siguiente" data-target="musica">
+                    <span class="btn-text">Siguiente: Música</span>
+                    <span class="btn-arrow">➔</span>
+                </button>
             </div>
         </section>
 
@@ -178,37 +203,37 @@
                     <div class="cancion-numero">1</div>
                     <h3>Amor</h3>
                     <p class="artista">Danny Ocean</p>
-                    <p class="descripcion">Cuando me dijiste que te gustaba Danny, fue de las primeras que escuche jejeje. Y ahora resultó que me la cantas.</p>
-                    <a href="https://youtu.be/yExp857bijc?si=AOyH62Tb52kvMMz9" target="_blank" class="btn-youtube">Ver en YouTube 🎵</a>
+                    <p class="descripcion">Empezamos a hablar en esas fechas. Tú me hacías sentir amor real.</p>
+                    <a href="https://open.spotify.com/track/5pC3F4JNYSX4iG7P3MIz0W" target="_blank" class="btn-spotify">Escuchar en Spotify 🎵</a>
                 </div>
 
                 <div class="cancion-card">
                     <div class="cancion-numero">2</div>
                     <h3>Chinita Linda</h3>
                     <p class="artista">Álvaro Díaz</p>
-                    <p class="descripcion">Porque tú eres mi chinita linda, mi muchachita hermosa bella y preciosa.</p>
-                    <a href="https://youtu.be/EgncuSy4juY?si=SJoxdaJeaJBd2d-M" target="_blank" class="btn-youtube">Ver en YouTube 🎵</a>
-                </div>
-
-                <div class="cancion-card">
-                    <div class="cancion-numero">3</div>
-                    <h3>Cosas que no te dije</h3>
-                    <p class="artista">SAIKO</p>
-                    <p class="descripcion">Cuando la escuché por primera vez, recién estabamos empezando algo más especial que amigos y me identifique.</p>
-                    <a href="https://youtu.be/8obld3JrBNM?si=-uHRrfbUN1EUZtlV" target="_blank" class="btn-youtube">Ver en YouTube 🎵</a>
+                    <p class="descripcion">Porque tú eres mi chinita linda, mi muchachita hermosa del corazón.</p>
+                    <a href="https://open.spotify.com/track/5E8uJbGO0eFnkqfEGklrWR" target="_blank" class="btn-spotify">Escuchar en Spotify 🎵</a>
                 </div>
 
                 <div class="cancion-card">
                     <div class="cancion-numero">💝</div>
                     <h3>Tu Canción Para Mí</h3>
                     <p class="artista">La Que Me Dedicaste</p>
-                    <p class="descripcion">Esta es mi favorita porque salió de tu corazón. La que me dedicaste como expresión de tu amor, gracias.</p>
-                    <a href="https://youtu.be/z0701vzvrco" target="_blank" class="btn-youtube">Ver en YouTube 🎵</a>
+                    <p class="descripcion">Esta es mi favorita porque salió del corazón. La que me dedicas como expresión de tu amor.</p>
+                    <a href="https://youtu.be/z0701vzvrco" target="_blank" class="btn-spotify">Ver en YouTube 🎵</a>
                 </div>
             </div>
-        </div>
-            <div class="next-section-container">
-                <button class="btn-siguiente" data-target="datos">Siguiente: Datos Bonitos ➔</button>
+
+            <div class="musica-nota">
+                <p>💡 Si descargaste las canciones, puedes reproducirlas en tu reproductor favorito mientras disfrutas esta página.</p>
+            </div>
+
+            <!-- Botón de siguiente mejorado -->
+            <div class="nav-buttons-container">
+                <button class="btn-siguiente" data-target="datos">
+                    <span class="btn-text">Siguiente: Datos Bonitos</span>
+                    <span class="btn-arrow">➔</span>
+                </button>
             </div>
         </section>
 
@@ -223,12 +248,12 @@
 
                 <div class="dato-box azul">
                     <h3>Tu Color 💙</h3>
-                    <p>Azul marino. Y te ves increíble vestida de negro. (Me encanta cuando son vestidos jeje)</p>
+                    <p>Azul marino. Y te ves increíble vestida de negro. (Me encanta eso de ti)</p>
                 </div>
 
                 <div class="dato-box">
                     <h3>Equipo de Corazón ⚽</h3>
-                    <p>Boca Juniors 💙💛. Como debe ser, del más grande.</p>
+                    <p>Boca Juniors 💙💛. Ese azul y oro en tu pecho.</p>
                 </div>
 
                 <div class="dato-box rosa">
@@ -238,12 +263,12 @@
 
                 <div class="dato-box azul">
                     <h3>Lo Que Te Hace Feliz 🎬</h3>
-                    <p>Todos los chicos de los que me enamoré, The Notebook, BTS, k-dramas y todo lo romántico (wakala).</p>
+                    <p>Todos los chicos de los que me enamoré, The Notebook, BTS, k-dramas y todo lo romántico.</p>
                 </div>
 
                 <div class="dato-box">
                     <h3>Tus Cantantes 🎤</h3>
-                    <p>Danny Ocean, Yan Block, Eladio Carrión, Trueno BTS y tantos otros que me encanta compartir contigo.</p>
+                    <p>Danny Ocean, Álvaro Díaz, Eladio Carrión, BTS y tantos otros que me encanta compartir contigo.</p>
                 </div>
 
                 <div class="dato-box rosa">
@@ -261,9 +286,13 @@
                     <p>Para ti son muy especiales, así que los míos también lo serán porque estarás en ellos.</p>
                 </div>
             </div>
-        </div>
-            <div class="next-section-container">
-                <button class="btn-siguiente" data-target="carta">Siguiente: Mi Carta ➔</button>
+
+            <!-- Botón de siguiente mejorado -->
+            <div class="nav-buttons-container">
+                <button class="btn-siguiente" data-target="carta">
+                    <span class="btn-text">Siguiente: Mi Carta</span>
+                    <span class="btn-arrow">➔</span>
+                </button>
             </div>
         </section>
 
@@ -299,11 +328,14 @@
                     <p class="firma">Tu Sebas 💙</p>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 3rem;">
-                        <a href="#" data-section="sorpresa" class="nav-link" style="background: linear-gradient(135deg, #ff1493, #0052cc); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);">
-                            ¡Ir a la Sorpresa Final! 🎁
-                        </a>
-                    </div>
+
+            <!-- Botón de siguiente mejorado -->
+            <div class="nav-buttons-container">
+                <button class="btn-siguiente" data-target="sorpresa">
+                    <span class="btn-text">Siguiente: Tu Sorpresa Especial 🎁</span>
+                    <span class="btn-arrow">➔</span>
+                </button>
+            </div>
         </section>
 
         <!-- SORPRESA FINAL -->

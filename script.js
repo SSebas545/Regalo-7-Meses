@@ -1,3 +1,47 @@
+// ==================== CONTADOR DINÁMICO EN TIEMPO REAL ====================
+
+function actualizarContador() {
+    const fecha_inicio = new Date(2026, 1, 3, 0, 0, 0); // 3 de Febrero 2026
+    const ahora = new Date();
+    
+    let years = ahora.getFullYear() - fecha_inicio.getFullYear();
+    let months = ahora.getMonth() - fecha_inicio.getMonth();
+    let days = ahora.getDate() - fecha_inicio.getDate();
+    let hours = ahora.getHours();
+
+    // Ajustar meses y años si es necesario
+    if (days < 0) {
+        months--;
+        const mes_anterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
+        days += mes_anterior.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    // Actualizar los elementos
+    const yearsEl = document.getElementById('years');
+    const monthsEl = document.getElementById('months');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+
+    if (yearsEl) yearsEl.textContent = years;
+    if (monthsEl) monthsEl.textContent = months;
+    if (daysEl) daysEl.textContent = days;
+    if (hoursEl) hoursEl.textContent = hours;
+}
+
+// Actualizar contador al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarContador();
+    // Actualizar cada hora
+    setInterval(actualizarContador, 3600000);
+});
+
+// ==================== NAVEGACIÓN Y SECCIONES ====================
+
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section');
@@ -13,13 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             const sectionId = this.getAttribute('data-section');
-            
-            // Si es "sorpresa", ir a ella
-            if (sectionId === 'sorpresa') {
-                showSection('sorpresa');
-            } else {
-                showSection(sectionId);
-            }
+            showSection(sectionId);
 
             // Actualizar nav activo
             navLinks.forEach(l => l.classList.remove('active'));
@@ -66,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-// Botón abrir regalo con animación mejorada
+    // Botón abrir regalo con animación mejorada
     if (btnAbrir) {
         btnAbrir.addEventListener('click', function() {
             const regaloBox = document.querySelector('.regalo-box');
@@ -89,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-// Crear confeti
+    // Crear confeti
     function createConfetti() {
         for (let i = 0; i < 60; i++) {
             const confetto = document.createElement('div');
@@ -129,11 +167,16 @@ document.addEventListener('DOMContentLoaded', function() {
             requestAnimationFrame(animate);
         }
     }
+
     function getRandomColor() {
         const colors = ['#ff1493', '#0052cc', '#ffd700', '#ffb6d9', '#001f3f', '#f8f8f8'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
+    // Reproducir audio (opcional)
+    function playAudio(type) {
+        // Aquí puedes agregar sonidos si quieres
+    }
 
     // Animaciones al scroll
     observeElements();
@@ -168,8 +211,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Inicializar con portada
-    showSection('portada');
     // --- Botones de "Siguiente" al final de cada página ---
     const btnSiguientes = document.querySelectorAll('.btn-siguiente');
     
@@ -192,6 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Inicializar con portada
+    showSection('portada');
 });
 
 // Soporte para tema oscuro (opcional)
@@ -211,4 +254,3 @@ document.addEventListener('auxclick', (e) => {
         e.preventDefault();
     }
 });
-
