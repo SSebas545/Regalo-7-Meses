@@ -606,6 +606,7 @@ main {
     padding: 3rem;
 }
 
+/* MODIFICACIONES PARA EL REGALO Y SU ANIMACIÓN DE APERTURA */
 .regalo-box {
     width: 200px;
     height: 200px;
@@ -634,16 +635,33 @@ main {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     z-index: 10;
     animation: lidBounce 2s ease-in-out infinite;
+    transform-origin: right bottom;
 }
 
-@keyframes rotate {
-    0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
-    50% { transform: rotateX(5deg) rotateY(10deg); }
+/* Estado cuando la caja se abre */
+.regalo-box.open .regalo-body {
+    animation: none;
+    transform: scale(0.95);
+    transition: transform 0.4s ease;
 }
 
-@keyframes lidBounce {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+.regalo-box.open .regalo-lid {
+    animation: fallAndDisappear 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fallAndDisappear {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(-30px) rotate(-15deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(180px) translateX(80px) rotate(135deg);
+        opacity: 0;
+    }
 }
 
 .btn-abrir {

@@ -66,19 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Botón abrir regalo
+// Botón abrir regalo con animación mejorada
     if (btnAbrir) {
         btnAbrir.addEventListener('click', function() {
-            sorpresaContent.classList.remove('hidden');
+            const regaloBox = document.querySelector('.regalo-box');
+            
+            // Añadir clase para activar la animación de apertura de la tapa
+            if (regaloBox) {
+                regaloBox.classList.add('open');
+            }
+            
+            // Ocultar el botón
             btnAbrir.style.display = 'none';
             
-            // Crear confeti
-            createConfetti();
+            // Esperar medio segundo a que se abra la caja antes de lanzar el confeti y mostrar el mensaje
+            setTimeout(() => {
+                createConfetti();
+                sorpresaContent.classList.remove('hidden');
+            }, 500);
             
-            // Efecto de sonido si quieres (opcional)
             playAudio('gift-open');
         });
     }
+
 // Crear confeti
     function createConfetti() {
         for (let i = 0; i < 60; i++) {
