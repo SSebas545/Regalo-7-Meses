@@ -941,3 +941,54 @@ main {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
+/* BOTONES DE NAVEGACIÓN MEJORADOS */
+.nav-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0 1rem 0;
+    flex-wrap: wrap;
+}
+.btn-siguiente {
+    background: linear-gradient(135deg, var(--color-rosa) 0%, var(--color-azul-light) 100%);
+    color: var(--color-blanco);
+    border: none;
+    padding: 1.2rem 2.5rem;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+.btn-siguiente::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+}
+.btn-siguiente:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(255, 20, 147, 0.4);
+}
+.btn-siguiente:hover::before {
+    left: 100%;
+}
+.btn-arrow {
+    display: inline-block;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+.btn-siguiente:hover .btn-arrow {
+    transform: translateX(5px);
+}
