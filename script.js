@@ -79,59 +79,51 @@ document.addEventListener('DOMContentLoaded', function() {
             playAudio('gift-open');
         });
     }
-
-    // Crear confeti
+// Crear confeti
     function createConfetti() {
-        const confettiContainer = document.querySelector('.confeti');
-        if (!confettiContainer) return;
-
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 60; i++) {
             const confetto = document.createElement('div');
             confetto.style.position = 'fixed';
             confetto.style.width = Math.random() * 10 + 5 + 'px';
-            confetto.style.height = confetto.style.width;
+            confetto.style.height = Math.random() * 5 + 5 + 'px';
             confetto.style.backgroundColor = getRandomColor();
-            confetto.style.left = Math.random() * window.innerWidth + 'px';
-            confetto.style.top = '-10px';
-            confetto.style.borderRadius = '50%';
             confetto.style.zIndex = '9999';
             confetto.style.pointerEvents = 'none';
+            confetto.style.borderRadius = '2px';
 
             document.body.appendChild(confetto);
 
-            let x = Math.random() * 4 - 2;
-            let y = Math.random() * 8 + 8;
+            let posX = Math.random() * window.innerWidth;
+            let posY = -20;
+            let xSpeed = (Math.random() - 0.5) * 4;
+            let ySpeed = Math.random() * 3 + 2;
             let rotation = Math.random() * 360;
             let rotationSpeed = Math.random() * 10 - 5;
 
             const animate = () => {
-                y -= 2;
-                x += (Math.random() - 0.5) * 0.5;
+                posY += ySpeed;
+                posX += xSpeed;
                 rotation += rotationSpeed;
 
-                confetto.style.transform = `translate(${x}px, -${y}px) rotate(${rotation}deg)`;
+                confetto.style.top = posY + 'px';
+                confetto.style.left = posX + 'px';
+                confetto.style.transform = `rotate(${rotation}deg)`;
 
-                if (y > window.innerHeight + 100) {
-                    confetto.remove();
-                } else {
+                if (posY < window.innerHeight) {
                     requestAnimationFrame(animate);
+                } else {
+                    confetto.remove();
                 }
             };
 
-            animate();
+            requestAnimationFrame(animate);
         }
     }
-
     function getRandomColor() {
         const colors = ['#ff1493', '#0052cc', '#ffd700', '#ffb6d9', '#001f3f', '#f8f8f8'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    // Reproducir audio (opcional)
-    function playAudio(type) {
-        // Aquí puedes agregar sonidos si quieres
-        // Por ahora, solo es un placeholder
-    }
 
     // Animaciones al scroll
     observeElements();
