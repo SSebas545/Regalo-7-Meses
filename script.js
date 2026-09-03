@@ -211,4 +211,38 @@ document.addEventListener('auxclick', (e) => {
         e.preventDefault();
     }
 });
+function actualizarContador() {
+    const fecha_inicio = new Date(2026, 1, 3, 0, 0, 0); // 3 de Febrero 2026
+    const ahora = new Date();
+    
+    let years = ahora.getFullYear() - fecha_inicio.getFullYear();
+    let months = ahora.getMonth() - fecha_inicio.getMonth();
+    let days = ahora.getDate() - fecha_inicio.getDate();
+    let hours = ahora.getHours();
+
+    if (days < 0) {
+        months--;
+        const mes_anterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
+        days += mes_anterior.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    const yearsEl = document.getElementById('years');
+    const monthsEl = document.getElementById('months');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+
+    if (yearsEl) yearsEl.textContent = years;
+    if (monthsEl) monthsEl.textContent = months;
+    if (daysEl) daysEl.textContent = days;
+    if (hoursEl) hoursEl.textContent = hours;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarContador();
+    setInterval(actualizarContador, 3600000); // Actualiza cada hora
+});
 
