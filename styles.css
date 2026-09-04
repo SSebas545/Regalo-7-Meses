@@ -929,11 +929,7 @@ main {
     color: var(--color-rosa);
     margin: 0 0.5rem;
 }
-.subtexto-contador {
-    font-size: 1rem;
-    color: var(--color-gris);
-    margin-bottom: 1rem;
-}
+
 .fecha-inicio {
     font-weight: bold;
     background: linear-gradient(135deg, var(--color-rosa), var(--color-azul));
