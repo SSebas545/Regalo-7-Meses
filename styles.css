@@ -936,6 +936,8 @@ main {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 /* BOTONES DE NAVEGACIÓN MEJORADOS */
