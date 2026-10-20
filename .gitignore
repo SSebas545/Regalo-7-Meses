@@ -1,0 +1,14 @@
+# Dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Config de opencode: es local de cada maquina, no va al repo
+opencode.json
+.opencode/
+
+# Sistema
+.DS_Store
+Thumbs.db
