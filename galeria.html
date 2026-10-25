@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Las fotos · Made</title>
+  <meta name="description" content="Nuestras fotos.">
+
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+
+  <meta name="theme-color" content="#0b1020">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Igual que en index.html: solo se habla con la API de GitHub,
+       que es de donde salen las fotos (repo privado). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1020'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='34' fill='%23E3A6A0' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="fuentes/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="pagina-galeria">
+
+  <!-- ================= ACCESO ================= -->
+  <div class="acceso" id="acceso" hidden>
+    <div class="acceso__caja">
+      <h1 class="acceso__titulo">Es de nosotros dos</h1>
+      <p class="acceso__texto">Escribí la palabra que acordamos.</p>
+      <form id="acceso-form" novalidate>
+        <label class="acceso__texto" for="acceso-clave">Palabra</label>
+        <input class="acceso__campo" id="acceso-clave" name="clave" type="password"
+               inputmode="text" autocomplete="off" autocapitalize="off"
+               autocorrect="off" spellcheck="false" required>
+        <button class="acceso__boton" id="acceso-entrar" type="submit">Entrar</button>
+      </form>
+      <p class="acceso__error" id="acceso-error" role="alert" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- ================= SITIO ================= -->
+  <div id="sitio" hidden>
+
+    <header class="barra">
+      <a class="barra__marca" href="index.html" aria-label="Volver al inicio">M.</a>
+      <button type="button" class="boton-redondo" id="abrir-subida" aria-label="Subir fotos"
+              aria-controls="panel-subida" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" aria-hidden="true">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </button>
+    </header>
+
+    <main>
+      <div class="cabecera-galeria">
+        <div class="cabecera-galeria__texto">
+          <span class="eyebrow">Nosotros</span>
+          <h1>Las fotos</h1>
+        </div>
+        <span class="cabecera-galeria__cuenta" id="cuenta" aria-live="polite">—</span>
+      </div>
+
+      <!-- Estados: sin token, vacío, error. Se arma desde galeria.js. -->
+      <div class="aviso" id="estado" hidden></div>
+
+      <ul class="grilla" id="grilla"></ul>
+    </main>
+
+    <footer class="pie">
+      <p class="pie__texto">Nuestras, y de nadie más.</p>
+      <a class="pie__enlace" href="index.html">← Volver</a>
+    </footer>
+  </div>
+
+  <!-- ================= PANELES ================= -->
+  <div class="panel__velo" id="velo" data-abierto="no"></div>
+
+  <section class="panel" id="panel-token" role="dialog" aria-modal="true"
+           aria-labelledby="token-titulo" data-abierto="no">
+    <span class="panel__asa" aria-hidden="true"></span>
+    <h2 class="panel__titulo" id="token-titulo">La llave de las fotos</h2>
+    <p class="panel__texto">
+      Las fotos no están en la página: viven en un repo privado y se leen
+      con un token. Pegalo acá. Queda solo en esta pestaña y se borra al
+      cerrarla.
+    </p>
+    <label class="panel__texto" for="token-campo">Token de GitHub</label>
+    <input class="panel__campo" id="token-campo" type="password" name="token"
+           inputmode="text" autocomplete="off" autocapitalize="off"
+           autocorrect="off" spellcheck="false" placeholder="github_pat_…">
+    <p class="panel__texto" id="token-estado" role="status" aria-live="polite"></p>
+    <div class="panel__acciones">
+      <button class="boton" id="token-guardar" type="button" data-foco>Guardar</button>
+      <button class="boton boton--fantasma" id="token-borrar" type="button">Borrar</button>
+      <button class="boton boton--fantasma" id="token-cerrar" type="button">Cerrar</button>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-subida" role="dialog" aria-modal="true"
+           aria-labelledby="subida-titulo" data-abierto="no">
+    <span class="panel__asa" aria-hidden="true"></span>
+    <h2 class="panel__titulo" id="subida-titulo">Subir fotos</h2>
+    <p class="panel__texto">
+      Se achican acá, en el celular, antes de salir. A las fotos se les
+      quitan los datos del archivo (dónde y cuándo se sacaron) y se van
+      derechito al repo privado. Hasta 10 por vez.
+    </p>
+
+    <input class="oculto" id="archivo" type="file" accept="image/*" multiple tabindex="-1">
+    <div class="panel__acciones">
+      <button class="boton" id="elegir" type="button" data-foco>Elegir fotos</button>
+    </div>
+
+    <div class="progreso" id="progreso" hidden>
+      <span id="progreso-texto">Preparando…</span>
+      <span class="progreso__barra">
+        <span class="progreso__relleno" id="progreso-relleno"></span>
+      </span>
+    </div>
+
+    <ul class="cola" id="cola"></ul>
+
+    <div class="panel__acciones">
+      <button class="boton boton--fantasma" id="subida-token" type="button">Cambiar token</button>
+      <button class="boton boton--fantasma" id="subida-cerrar" type="button">Cerrar</button>
+    </div>
+  </section>
+
+  <!-- ================= LIGHTBOX ================= -->
+  <dialog class="lightbox" id="lightbox" aria-label="Foto ampliada">
+    <div class="lightbox__marco">
+      <img class="lightbox__imagen" id="lightbox-img" alt="">
+      <button class="lightbox__cerrar" id="lightbox-cerrar" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" type="button"
+              aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 6l-6 6 6 6"/>
+        </svg>
+      </button>
+      <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" type="button"
+              aria-label="Foto siguiente">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 6l6 6-6 6"/>
+        </svg>
+      </button>
+      <div class="lightbox__pie">
+        <span class="lightbox__fecha" id="lightbox-fecha"></span>
+        <span class="lightbox__fecha" id="lightbox-cuenta"></span>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <p class="sin-js">Esta página necesita JavaScript para abrirse.</p>
+  </noscript>
+
+  <script src="config.js"></script>
+  <script src="acceso.js"></script>
+  <script src="galeria.js"></script>
+</body>
+</html>
