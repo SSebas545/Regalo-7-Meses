@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cambiar la clave</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Esta página no habla con nadie: el hash se calcula acá mismo. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+
+  <link rel="preload" href="fuentes/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="pagina-clave">
+
+  <main class="clave">
+    <a class="clave__volver" href="index.html">← Volver</a>
+
+    <h1 class="clave__titulo">Cambiar la clave</h1>
+    <p class="clave__texto">
+      Escribí la palabra nueva y esto te devuelve el salt y el hash para
+      pegar en <code>config.js</code>. La palabra no sale de esta página:
+      el hash se calcula en el navegador.
+    </p>
+
+    <form class="clave__form" id="clave-form" novalidate>
+      <label class="clave__etiqueta" for="clave-nueva">Clave nueva</label>
+      <input class="clave__campo" id="clave-nueva" type="password"
+             autocomplete="new-password" autocapitalize="off" spellcheck="false"
+             minlength="4" required>
+
+      <label class="clave__etiqueta" for="clave-repetir">Repetila</label>
+      <input class="clave__campo" id="clave-repetir" type="password"
+             autocomplete="new-password" autocapitalize="off" spellcheck="false"
+             minlength="4" required>
+
+      <button class="boton" id="clave-generar" type="submit">Generar</button>
+    </form>
+
+    <p class="clave__error" id="clave-error" role="alert" aria-live="polite"></p>
+
+    <section class="clave__resultado" id="clave-resultado" hidden>
+      <h2 class="clave__subtitulo">Listo</h2>
+      <p class="clave__texto">
+        Reemplazá el bloque <code>acceso</code> de <code>config.js</code> por esto:
+      </p>
+      <pre class="clave__salida" id="clave-salida"></pre>
+      <div class="clave__acciones">
+        <button class="boton" id="clave-copiar" type="button">Copiar</button>
+      </div>
+      <p class="clave__texto">
+        Después subí el cambio. Las sesiones que ya estaban abiertas se
+        cierran solas: la marca de sesión guarda el hash, no un “sí”.
+      </p>
+    </section>
+
+    <p class="clave__aviso">
+      Acordate de lo importante: esta clave es <strong>disuasión</strong>.
+      El texto de la página es público y se lee con “ver código fuente”.
+      Lo único que está protegido de verdad son las fotos, que viven en
+      un repo privado y necesitan un token.
+    </p>
+  </main>
+
+  <script src="clave.js"></script>
+</body>
+</html>

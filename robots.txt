@@ -1,0 +1,5 @@
+# Es un regalo, no un sitio que tenga que aparecer en buscadores.
+# Esto no protege nada: solo pide a los robots que no lo listen.
+
+User-agent: *
+Disallow: /
