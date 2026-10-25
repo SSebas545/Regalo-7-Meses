@@ -36,10 +36,10 @@ dependencias: lo que hay en el repo es lo que se publica.
 - **Los colores salen solo de las variables** del principio de
   `styles.css`. Si hace falta translúcido, `color-mix()` sobre la
   variable; no un hex suelto.
-- **La galería está detrás del regalo**: `#galeria-contenido` empieza
-  con `data-visible="no"` y `galeria.js` lo pasa a `si` al abrir la
-  caja. Cualquier test que toque la grilla tiene que abrir
-  `#regalo-abrir` primero.
+- **Abrir el regalo no es obligatorio**: `#galeria-contenido` está
+  siempre visible y el regalo es una portada con el mensaje. Si se
+  agrega una sección entre el regalo y las fotos, el botón
+  `#regalo-saltear` tiene que seguir llevando a la galería.
 - **Secretos**: el token de GitHub nunca va al repo, ni a la URL, ni
   a `localStorage`. Va en `sessionStorage` y se borra al cerrar la
   pestaña. La clave del portón es un hash con salt, no la clave.

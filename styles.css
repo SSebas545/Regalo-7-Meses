@@ -473,6 +473,7 @@ a {
 }
 
 .sobre__nombre {
+  justify-self: center;
   font-size: var(--t-display);
   line-height: 0.98;
   letter-spacing: -0.03em;
@@ -1001,23 +1002,18 @@ body.menu-abierto {
    El regalo, antes de las fotos
    ============================================================ */
 
+/* El alto no cambia al abrir: si cambia, la caja salta sola bajo el
+   dedo (medido: 124 px en 80 ms). La sección conserva su alto y el
+   mensaje reserva sus dos líneas desde el principio. */
 .regalo {
   display: grid;
   justify-items: center;
+  align-content: center;
   gap: 16px;
+  min-height: min(76svh, 620px);
   padding: clamp(28px, 8vh, 76px) var(--lateral) clamp(16px, 4vh, 34px);
   text-align: center;
   transition: padding 0.6s var(--ease-out);
-}
-
-.regalo[data-abierto='si'] {
-  padding-block: 20px 6px;
-}
-
-/* Mientras está cerrado ocupa el alto libre, así el pie queda abajo. */
-.regalo[data-abierto='no'] {
-  flex: 1;
-  align-content: center;
 }
 
 .regalo__caja {
@@ -1151,7 +1147,9 @@ body.menu-abierto {
 }
 
 .regalo__mensaje {
-  min-height: 1.2em;
+  /* Dos líneas reservadas: el mensaje abierto mide lo mismo, así abrir
+     no reacomoda la sección. */
+  min-height: 2.2em;
   margin: 0;
   max-width: 20ch;
   font-family: var(--serif);
@@ -1175,14 +1173,22 @@ body.menu-abierto {
   animation: subir 0.7s var(--ease-out) both;
 }
 
-/* Las fotos no se ven hasta abrir el regalo. */
-#galeria-contenido {
-  display: none;
+/* Abrir el regalo no es obligatorio: las fotos están abajo igual. */
+.regalo__saltear {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: none;
+  color: var(--tenue);
+  font: inherit;
+  font-size: var(--t-chico);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, transform 0.12s var(--ease-out);
 }
 
-#galeria-contenido[data-visible='si'] {
-  display: block;
-  animation: subir 0.55s var(--ease-out) both;
+.regalo__saltear:active {
+  transform: scale(0.98);
 }
 
 /* ============================================================
@@ -1206,6 +1212,11 @@ body.menu-abierto {
 
 .pagina-galeria main {
   flex: 1;
+}
+
+/* Al saltar a las fotos, la cabecera no queda debajo de la barra fija. */
+#galeria-contenido {
+  scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top) + 12px);
 }
 
 .cabecera-galeria {

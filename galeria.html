@@ -73,11 +73,11 @@
       </button>
     </header>
 
-    <!-- Antes de las fotos: el regalo. No se ven hasta abrirlo. -->
+    <!-- Antes de las fotos: el regalo. Abrirlo no es obligatorio. -->
     <section class="regalo" id="regalo" data-abierto="no" aria-label="El regalo">
       <button class="regalo__caja" id="regalo-abrir" type="button"
               aria-label="Abrir el regalo" aria-describedby="regalo-pista"
-              aria-expanded="false" aria-controls="galeria-contenido">
+              aria-expanded="false" aria-controls="regalo-mensaje">
         <span class="regalo__brillo" aria-hidden="true"></span>
         <span class="regalo__cuerpo" aria-hidden="true"></span>
         <span class="regalo__lazo regalo__lazo--v" aria-hidden="true"></span>
@@ -87,9 +87,10 @@
       </button>
       <p class="regalo__pista" id="regalo-pista">Tocá para abrir</p>
       <p class="regalo__mensaje" id="regalo-mensaje" role="status" aria-live="polite"></p>
+      <button class="regalo__saltear" id="regalo-saltear" type="button">Ir a las fotos →</button>
     </section>
 
-    <main id="galeria-contenido" data-visible="no">
+    <main id="galeria-contenido">
       <div class="cabecera-galeria">
         <div class="cabecera-galeria__texto">
           <span class="eyebrow">Nosotros</span>
