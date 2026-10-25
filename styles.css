@@ -1,7 +1,8 @@
 /* ============================================================
    Regalo — hoja de estilos única
-   Paleta nocturna cálida. Contrastes medidos contra el fondo:
-   texto 16.51:1 · tenue 7.49:1 · acento 9.22:1 · miel 9.49:1.
+   Paleta azul marino, con acento azul claro y un dorado cálido.
+   Contrastes medidos contra --fondo (#070f1e):
+   texto 16.7:1 · tenue 8.9:1 · acento 10.9:1 · miel 10.3:1.
    Target: iPhone 13/14, Safari. Mobile-first.
    ============================================================ */
 
@@ -17,15 +18,15 @@
 }
 
 :root {
-  --fondo: #0b1020;
-  --sup: #121a2e;
-  --sup-2: #182238;
-  --texto: #f2efea;
-  --tenue: #9aa3b8;
-  --acento: #e3a6a0;
-  --miel: #d9b26a;
-  --borde: rgba(242, 239, 234, 0.1);
-  --borde-fuerte: rgba(242, 239, 234, 0.18);
+  --fondo: #070f1e;
+  --sup: #0d1a2e;
+  --sup-2: #13233c;
+  --texto: #eaf0fa;
+  --tenue: #9fb2cd;
+  --acento: #a9c6ec;
+  --miel: #e0b878;
+  --borde: rgba(234, 240, 250, 0.1);
+  --borde-fuerte: rgba(234, 240, 250, 0.18);
 
   --radio-s: 8px;
   --radio-m: 16px;
@@ -77,6 +78,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overscroll-behavior-y: none;
+  /* Los lirios de las esquinas se salen a propósito: se recortan
+     acá para que no abran scroll horizontal. `clip` y no `hidden`
+     para no crear un contenedor de scroll. */
+  overflow-x: clip;
 }
 
 h1,
@@ -127,7 +132,7 @@ a {
 }
 
 ::selection {
-  background: rgba(227, 166, 160, 0.22);
+  background: color-mix(in srgb, var(--acento) 22%, transparent);
 }
 
 :focus-visible {
@@ -190,7 +195,7 @@ a {
   align-items: center;
   justify-content: space-between;
   padding-inline: var(--lateral);
-  background: rgba(11, 16, 32, 0.72);
+  background: color-mix(in srgb, var(--fondo) 72%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(1.15);
   backdrop-filter: blur(14px) saturate(1.15);
   border-bottom: 1px solid var(--borde);
@@ -331,7 +336,7 @@ a {
   margin-top: 12px;
   border-radius: var(--radio-m);
   background: var(--acento);
-  color: #1a0f14;
+  color: #0a1424;
   font-weight: 600;
   transition: transform 0.12s var(--ease-out), opacity 0.2s;
 }
@@ -426,8 +431,8 @@ a {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #f0c9c3, var(--acento));
-  color: #3a1c22;
+  background: radial-gradient(circle at 35% 30%, #f3d9a8, var(--miel));
+  color: #3a2a12;
   font-family: var(--serif);
   font-size: 1.25rem;
   transition: opacity 0.3s, transform 0.4s var(--ease-out);
@@ -484,13 +489,13 @@ a {
 .sobre__corazon {
   font-family: var(--serif);
   font-size: 0.55em;
-  color: var(--acento);
+  color: var(--miel);
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
   font-weight: 500;
   display: inline-block;
   transform-origin: center;
   animation: corazon-latido 2.4s var(--ease-inout, ease-in-out) infinite;
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--acento) 60%, transparent));
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--miel) 60%, transparent));
 }
 
 .sobre__lema {
@@ -500,6 +505,78 @@ a {
   color: var(--tenue);
   max-width: 24ch;
   margin-inline: auto;
+}
+
+/* ---------- lirios decorativos ---------- */
+
+/* El dibujo vive una sola vez por página, en un <symbol>. */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.lirio {
+  color: var(--acento);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.lirio svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Dos grandes en las esquinas del sobre, detrás del contenido. */
+.sobre-seccion {
+  position: relative;
+  isolation: isolate;
+}
+
+.sobre-seccion .lirio {
+  position: absolute;
+  z-index: -1;
+  width: clamp(96px, 26vw, 148px);
+  height: clamp(96px, 26vw, 148px);
+}
+
+.sobre-seccion .lirio--a {
+  top: clamp(4px, 2vw, 24px);
+  left: 0;
+}
+
+.sobre-seccion .lirio--b {
+  right: 0;
+  bottom: clamp(4px, 2vw, 24px);
+}
+
+/* Divisor entre secciones: un lirio apoyado sobre la línea. */
+.flor-divisor {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: var(--acento);
+  opacity: 0.45;
+}
+
+.flor-divisor .lirio {
+  opacity: 1;
+  width: 30px;
+  height: 30px;
+}
+
+@media (max-width: 480px) {
+  .flor-divisor .lirio {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* En pantallas chicas no se amontonan: bajan la opacidad. */
+  .sobre-seccion .lirio {
+    opacity: 0.12;
+  }
 }
 
 /* ---------- contadores ---------- */
@@ -831,7 +908,7 @@ a {
 .promesa {
   padding: 24px;
   border-radius: var(--radio-m);
-  background: linear-gradient(160deg, rgba(227, 166, 160, 0.14), transparent 70%);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--acento) 14%, transparent), transparent 70%);
   border: 1px solid var(--borde-fuerte);
 }
 
@@ -918,6 +995,194 @@ body.menu-abierto {
 .revelar[data-visible='si'] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/* ============================================================
+   El regalo, antes de las fotos
+   ============================================================ */
+
+.regalo {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: clamp(28px, 8vh, 76px) var(--lateral) clamp(16px, 4vh, 34px);
+  text-align: center;
+  transition: padding 0.6s var(--ease-out);
+}
+
+.regalo[data-abierto='si'] {
+  padding-block: 20px 6px;
+}
+
+/* Mientras está cerrado ocupa el alto libre, así el pie queda abajo. */
+.regalo[data-abierto='no'] {
+  flex: 1;
+  align-content: center;
+}
+
+.regalo__caja {
+  position: relative;
+  width: 172px;
+  height: 160px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+}
+
+.regalo__caja:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 12px;
+  border-radius: var(--radio-m);
+}
+
+/* La luz que sale de la caja al abrirse. */
+.regalo__brillo {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: -1;
+  width: 220px;
+  height: 220px;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      color-mix(in srgb, var(--miel) 38%, transparent), transparent 68%);
+  opacity: 0;
+  transform: scale(0.55);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.regalo[data-abierto='si'] .regalo__brillo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.regalo__cuerpo {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 146px;
+  height: 98px;
+  transform: translateX(-50%);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 6px 6px 10px 10px;
+  background: linear-gradient(180deg, var(--sup-2), var(--sup));
+  box-shadow: 0 22px 46px -20px #000;
+}
+
+.regalo__lazo {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background: var(--miel);
+  opacity: 0.7;
+}
+
+.regalo__lazo--v {
+  width: 16px;
+  height: 98px;
+}
+
+.regalo__lazo--h {
+  bottom: 42px;
+  width: 146px;
+  height: 12px;
+}
+
+.regalo__tapa {
+  position: absolute;
+  left: 50%;
+  bottom: 94px;
+  width: 164px;
+  height: 26px;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--sup-2), var(--sup));
+  transition: transform 0.7s var(--ease-out), opacity 0.7s var(--ease-out);
+}
+
+.regalo[data-abierto='si'] .regalo__tapa {
+  transform: translateX(-50%) translateY(-46px) rotate(-14deg);
+  opacity: 0;
+}
+
+/* En vez de moño, un lirio: es su flor. */
+.regalo__flor {
+  position: absolute;
+  left: 50%;
+  bottom: 106px;
+  width: 54px;
+  height: 54px;
+  translate: -50% 0;
+  color: var(--miel);
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--miel) 55%, transparent));
+  transition: transform 0.7s var(--ease-out), opacity 0.7s;
+}
+
+.regalo__flor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.regalo[data-abierto='si'] .regalo__flor {
+  transform: translateY(-32px) scale(1.12);
+  opacity: 0.9;
+}
+
+.regalo__pista {
+  margin: 0;
+  font-size: var(--t-chico);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tenue);
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.regalo[data-abierto='si'] .regalo__pista {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.regalo__mensaje {
+  min-height: 1.2em;
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.75rem, 8vw, 2.9rem);
+  line-height: 1.1;
+  color: var(--miel);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s var(--ease-out) 0.25s,
+    transform 0.8s var(--ease-out) 0.25s;
+}
+
+.regalo[data-abierto='si'] .regalo__mensaje {
+  opacity: 1;
+  transform: none;
+}
+
+/* Abrirlo de nuevo repite el mensaje. */
+.regalo__mensaje--otra {
+  animation: subir 0.7s var(--ease-out) both;
+}
+
+/* Las fotos no se ven hasta abrir el regalo. */
+#galeria-contenido {
+  display: none;
+}
+
+#galeria-contenido[data-visible='si'] {
+  display: block;
+  animation: subir 0.55s var(--ease-out) both;
 }
 
 /* ============================================================
@@ -1074,7 +1339,7 @@ body.menu-abierto {
   padding: 0 22px;
   border-radius: 999px;
   background: var(--acento);
-  color: #1a0f14;
+  color: #0a1424;
   font-weight: 600;
   font-size: var(--t-chico);
   transition: transform 0.12s var(--ease-out), opacity 0.2s;
@@ -1124,7 +1389,7 @@ body.menu-abierto {
   position: fixed;
   inset: 0;
   z-index: 85;
-  background: rgba(4, 7, 15, 0.6);
+  background: color-mix(in srgb, var(--fondo) 60%, transparent);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.28s, visibility 0.28s;
@@ -1209,7 +1474,7 @@ body.menu-abierto {
 }
 
 .lightbox::backdrop {
-  background: #04070f;
+  background: var(--fondo);
 }
 
 .lightbox__marco {
@@ -1249,7 +1514,7 @@ body.menu-abierto {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(18, 26, 46, 0.8);
+  background: color-mix(in srgb, var(--sup) 80%, transparent);
   display: grid;
   place-items: center;
 }
@@ -1261,7 +1526,7 @@ body.menu-abierto {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(18, 26, 46, 0.8);
+  background: color-mix(in srgb, var(--sup) 80%, transparent);
   display: grid;
   place-items: center;
 }

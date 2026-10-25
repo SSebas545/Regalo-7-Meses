@@ -34,6 +34,14 @@ necesita WebCrypto y la galería necesita `fetch`.
 
 ## La galería
 
+### Antes de las fotos: el regalo
+
+La galería no arranca con la grilla. Primero hay una caja con un lirio
+en vez de moño: al tocarla se destapa, sale una luz cálida y aparece
+**"Te amo, nunca lo dudes."** Las fotos no se ven hasta ese momento.
+Al recargar, la caja vuelve a estar cerrada; si se toca de nuevo ya
+abierta, el mensaje se repite sin tocar las fotos.
+
 ### Cómo está armada
 
 Las fotos **no están en este repo**, que es público. Viven en otro
@@ -90,6 +98,28 @@ actualiza sola al recargar.
   fotos. Si algún día no alcanza, hay que paginar.
 - Los GIF y los SVG se rechazan: se validan los *magic bytes*, no
   la extensión.
+
+## Diseño
+
+Paleta azul marino, en variables al principio de `styles.css`:
+
+| variable | hex | para qué | contraste sobre el fondo |
+|---|---|---|---|
+| `--fondo` | `#070f1e` | el fondo | — |
+| `--sup` / `--sup-2` | `#0d1a2e` / `#13233c` | tarjetas, paneles, la caja | — |
+| `--texto` | `#eaf0fa` | el texto | 16.73:1 |
+| `--tenue` | `#9fb2cd` | texto secundario | 8.87:1 |
+| `--acento` | `#a9c6ec` | detalles, foco, enlaces | 10.93:1 |
+| `--miel` | `#e0b878` | el sello, el corazón, el regalo | 10.31:1 |
+
+Los contrastes están medidos con la fórmula de WCAG contra `--fondo`:
+todos pasan AA (4.5:1) y AAA (7:1). No hay colores sueltos: los pocos
+translúcidos se arman con `color-mix()` sobre las variables.
+
+**Los lirios** son SVG inline: un `<symbol id="lirio">` por página,
+reusado con `<use>`. Dos grandes en las esquinas del sobre y uno chico
+apoyado en la línea que separa las secciones. Se recolorean solos con
+`currentColor`; en mobile bajan la opacidad para no amontonarse.
 
 ## Seguridad: qué protege qué
 

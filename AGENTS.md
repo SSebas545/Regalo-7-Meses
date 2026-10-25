@@ -9,7 +9,7 @@ dependencias: lo que hay en el repo es lo que se publica.
 | archivo | qué es |
 |---|---|
 | `index.html` | la narrativa del regalo |
-| `galeria.html` | la galería de fotos y el panel de subida |
+| `galeria.html` | el regalo de entrada, las fotos y el panel de subida |
 | `clave.html` | herramienta para generar el hash de la clave |
 | `styles.css` | todos los estilos |
 | `config.js` | fechas, hash de la clave y datos del repo de fotos |
@@ -30,6 +30,16 @@ dependencias: lo que hay en el repo es lo que se publica.
   `addEventListener`.
 - **Nada de `innerHTML` con datos de la red.** Se arma con
   `createElement` y `textContent`.
+- **La decoración es SVG inline**, un `<symbol id="lirio">` por página
+  reusado con `<use href="#lirio">`. Nada de PNG ni librerías de íconos:
+  así se recolorea con `currentColor` y no pesa.
+- **Los colores salen solo de las variables** del principio de
+  `styles.css`. Si hace falta translúcido, `color-mix()` sobre la
+  variable; no un hex suelto.
+- **La galería está detrás del regalo**: `#galeria-contenido` empieza
+  con `data-visible="no"` y `galeria.js` lo pasa a `si` al abrir la
+  caja. Cualquier test que toque la grilla tiene que abrir
+  `#regalo-abrir` primero.
 - **Secretos**: el token de GitHub nunca va al repo, ni a la URL, ni
   a `localStorage`. Va en `sessionStorage` y se borra al cerrar la
   pestaña. La clave del portón es un hash con salt, no la clave.

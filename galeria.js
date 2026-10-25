@@ -61,6 +61,7 @@
   var tokenCampo, tokenEstado, tokenGuardar, tokenBorrar;
   var archivoInput, elegir, cola, progreso, progresoTexto, progresoRelleno;
   var lightbox, lbImagen, lbFecha, lbCuenta, lbPrev, lbNext, lbCerrar;
+  var regalo, regaloAbrir, regaloMensaje, galeriaCuerpo;
 
   /* ============================================================
      Token
@@ -1005,6 +1006,56 @@
   }
 
   /* ============================================================
+     El regalo
+     ============================================================ */
+
+  function mostrarGaleria() {
+    if (!galeriaCuerpo) return;
+
+    // Con movimiento reducido no hay tapa que esperar.
+    var quieto = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.setTimeout(function () {
+      galeriaCuerpo.setAttribute('data-visible', 'si');
+    }, quieto ? 0 : 620);
+  }
+
+  function abrirRegalo() {
+    if (regalo.getAttribute('data-abierto') === 'si') {
+      // Ya estaba abierto: se repite el mensaje, sin tocar las fotos.
+      regaloMensaje.classList.remove('regalo__mensaje--otra');
+      void regaloMensaje.offsetWidth; // fuerza el reflow para reanimar
+      regaloMensaje.classList.add('regalo__mensaje--otra');
+      return;
+    }
+
+    regalo.setAttribute('data-abierto', 'si');
+    regaloAbrir.setAttribute('aria-expanded', 'true');
+    // El texto se pone al abrir, no antes: así el lector de pantalla
+    // lo anuncia como novedad (role="status") y no lo lee de entrada.
+    regaloMensaje.textContent = 'Te amo, nunca lo dudes.';
+    mostrarGaleria();
+  }
+
+  function iniciarRegalo() {
+    if (!regalo || !regaloAbrir || !regaloMensaje) {
+      // Si el HTML viejo no trae el regalo, la galería se muestra
+      // igual: nunca se deja a las fotos detrás de algo que no existe.
+      if (galeriaCuerpo) galeriaCuerpo.setAttribute('data-visible', 'si');
+      return;
+    }
+
+    regaloAbrir.addEventListener('click', abrirRegalo);
+
+    if (regalo.getAttribute('data-abierto') === 'si') {
+      regaloAbrir.setAttribute('aria-expanded', 'true');
+      regaloMensaje.textContent = 'Te amo, nunca lo dudes.';
+      mostrarGaleria();
+    }
+  }
+
+  /* ============================================================
      Arranque
      ============================================================ */
 
@@ -1038,6 +1089,11 @@
     lbPrev = $('lightbox-prev');
     lbNext = $('lightbox-next');
     lbCerrar = $('lightbox-cerrar');
+
+    regalo = $('regalo');
+    regaloAbrir = $('regalo-abrir');
+    regaloMensaje = $('regalo-mensaje');
+    galeriaCuerpo = $('galeria-contenido');
   }
 
   function conectar() {
@@ -1174,6 +1230,7 @@
       }
     }, { passive: true });
 
+    iniciarRegalo();
     cargar();
   }
 
