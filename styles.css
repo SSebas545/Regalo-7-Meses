@@ -471,7 +471,26 @@ a {
   font-size: var(--t-display);
   line-height: 0.98;
   letter-spacing: -0.03em;
-  font-variation-settings: 'opsz' 120;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  font-weight: 500;
+  color: var(--texto);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--acento) 55%, transparent),
+    0 0 8px color-mix(in srgb, var(--acento) 35%, transparent);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.12em;
+}
+
+.sobre__corazon {
+  font-family: var(--serif);
+  font-size: 0.55em;
+  color: var(--acento);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  font-weight: 500;
+  display: inline-block;
+  transform-origin: center;
+  animation: corazon-latido 2.4s var(--ease-inout, ease-in-out) infinite;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--acento) 60%, transparent));
 }
 
 .sobre__lema {
@@ -872,6 +891,21 @@ body.menu-abierto {
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes corazon-latido {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.22);
+  }
+  30% {
+    transform: scale(0.96);
+  }
+  45% {
+    transform: scale(1.12);
   }
 }
 
