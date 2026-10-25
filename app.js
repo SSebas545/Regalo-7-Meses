@@ -139,6 +139,37 @@
     });
   }
 
+  /* ---------- el regalo, al final del recorrido ---------- */
+
+  function abrirRegalo(regalo, boton, mensaje) {
+    if (regalo.getAttribute('data-abierto') === 'si') {
+      // Ya estaba abierto: se repite el mensaje.
+      mensaje.classList.remove('regalo__mensaje--otra');
+      void mensaje.offsetWidth; // fuerza el reflow para reanimar
+      mensaje.classList.add('regalo__mensaje--otra');
+      return;
+    }
+
+    regalo.setAttribute('data-abierto', 'si');
+    boton.setAttribute('aria-expanded', 'true');
+    // El texto se pone al abrir, no antes: así el lector de pantalla
+    // lo anuncia como novedad (role="status") y no lo lee de entrada.
+    mensaje.textContent = 'Te amo, nunca lo dudes.';
+  }
+
+  function iniciarRegalo() {
+    var regalo = document.getElementById('regalo');
+    var boton = document.getElementById('regalo-abrir');
+    var mensaje = document.getElementById('regalo-mensaje');
+
+    // Si el HTML no trae el regalo, no hay nada que enganchar.
+    if (!regalo || !boton || !mensaje) return;
+
+    boton.addEventListener('click', function () {
+      abrirRegalo(regalo, boton, mensaje);
+    });
+  }
+
   /* ---------- arranque ---------- */
 
   function iniciar() {
@@ -147,6 +178,7 @@
     iniciarMenu();
     iniciarVolteables();
     iniciarRevelado();
+    iniciarRegalo();
 
     // Se recalcula al volver del segundo plano y cada minuto:
     // en iOS el setInterval se congela con la pestaña dormida.

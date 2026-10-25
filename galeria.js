@@ -61,7 +61,6 @@
   var tokenCampo, tokenEstado, tokenGuardar, tokenBorrar;
   var archivoInput, elegir, cola, progreso, progresoTexto, progresoRelleno;
   var lightbox, lbImagen, lbFecha, lbCuenta, lbPrev, lbNext, lbCerrar;
-  var regalo, regaloAbrir, regaloMensaje, regaloSaltear, galeriaCuerpo;
 
   /* ============================================================
      Token
@@ -1006,69 +1005,6 @@
   }
 
   /* ============================================================
-     El regalo
-     ============================================================ */
-
-  function abrirRegalo() {
-    if (regalo.getAttribute('data-abierto') === 'si') {
-      // Ya estaba abierto: se repite el mensaje, sin tocar las fotos.
-      regaloMensaje.classList.remove('regalo__mensaje--otra');
-      void regaloMensaje.offsetWidth; // fuerza el reflow para reanimar
-      regaloMensaje.classList.add('regalo__mensaje--otra');
-      return;
-    }
-
-    regalo.setAttribute('data-abierto', 'si');
-    regaloAbrir.setAttribute('aria-expanded', 'true');
-    // El texto se pone al abrir, no antes: así el lector de pantalla
-    // lo anuncia como novedad (role="status") y no lo lee de entrada.
-    regaloMensaje.textContent = 'Te amo, nunca lo dudes.';
-  }
-
-  // Las fotos no están en el flujo: esto las abre.
-  function mostrarGaleria() {
-    if (!galeriaCuerpo) return;
-    galeriaCuerpo.setAttribute('data-visible', 'si');
-    if (regaloSaltear) regaloSaltear.setAttribute('aria-expanded', 'true');
-  }
-
-  // Abre las fotos y salta a ellas. Es el único camino: abrir el
-  // regalo muestra el mensaje, no las fotos.
-  function irALasFotos() {
-    if (!galeriaCuerpo) return;
-
-    mostrarGaleria();
-
-    var quieto = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Un cuadro después del display:none → block: si se mide en el
-    // mismo, algunos motores calculan la posición con alto 0.
-    window.requestAnimationFrame(function () {
-      // El foco va antes del scroll: en iOS, enfocar durante un scroll
-      // suave lo cancela a mitad de camino.
-      var titulo = galeriaCuerpo.querySelector('h1');
-      if (titulo) {
-        titulo.setAttribute('tabindex', '-1');
-        titulo.focus({ preventScroll: true });
-      }
-
-      galeriaCuerpo.scrollIntoView({
-        behavior: quieto ? 'auto' : 'smooth',
-        block: 'start'
-      });
-    });
-  }
-
-  function iniciarRegalo() {
-    // Sin el regalo en el HTML, las fotos se abren igual con el botón.
-    if (!regalo || !regaloAbrir || !regaloMensaje) return;
-
-    regaloAbrir.addEventListener('click', abrirRegalo);
-    if (regaloSaltear) regaloSaltear.addEventListener('click', irALasFotos);
-  }
-
-  /* ============================================================
      Arranque
      ============================================================ */
 
@@ -1102,12 +1038,6 @@
     lbPrev = $('lightbox-prev');
     lbNext = $('lightbox-next');
     lbCerrar = $('lightbox-cerrar');
-
-    regalo = $('regalo');
-    regaloAbrir = $('regalo-abrir');
-    regaloMensaje = $('regalo-mensaje');
-    regaloSaltear = $('regalo-saltear');
-    galeriaCuerpo = $('galeria-contenido');
   }
 
   function conectar() {
@@ -1244,7 +1174,6 @@
       }
     }, { passive: true });
 
-    iniciarRegalo();
     cargar();
   }
 

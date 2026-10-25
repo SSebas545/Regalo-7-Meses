@@ -63,7 +63,7 @@
   <div id="sitio" hidden>
 
     <header class="barra">
-      <a class="barra__marca" href="index.html#carta" aria-label="Ir a la carta">M.</a>
+      <a class="barra__marca" href="index.html#sobre" aria-label="Ir a la carta del principio">M.</a>
       <button type="button" class="boton-redondo" id="abrir-subida" aria-label="Subir fotos"
               aria-controls="panel-subida" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -73,26 +73,8 @@
       </button>
     </header>
 
-    <!-- Antes de las fotos: el regalo. Abrirlo no es obligatorio. -->
-    <section class="regalo" id="regalo" data-abierto="no" aria-label="El regalo">
-      <button class="regalo__caja" id="regalo-abrir" type="button"
-              aria-label="Abrir el regalo" aria-describedby="regalo-pista"
-              aria-expanded="false" aria-controls="regalo-mensaje">
-        <span class="regalo__brillo" aria-hidden="true"></span>
-        <span class="regalo__cuerpo" aria-hidden="true"></span>
-        <span class="regalo__lazo regalo__lazo--v" aria-hidden="true"></span>
-        <span class="regalo__lazo regalo__lazo--h" aria-hidden="true"></span>
-        <span class="regalo__tapa" aria-hidden="true"></span>
-        <span class="regalo__flor" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#lirio"/></svg></span>
-      </button>
-      <p class="regalo__pista" id="regalo-pista">Tocá para abrir</p>
-      <p class="regalo__mensaje" id="regalo-mensaje" role="status" aria-live="polite"></p>
-      <button class="regalo__saltear" id="regalo-saltear" type="button"
-              aria-controls="galeria-contenido" aria-expanded="false">Ir a las fotos →</button>
-    </section>
-
-    <!-- Las fotos no están en el flujo: se abren con «Ir a las fotos». -->
-    <main id="galeria-contenido" data-visible="no">
+    <!-- Las fotos se ven directo: el regalo vive al final del index. -->
+    <main id="galeria-contenido">
       <div class="cabecera-galeria">
         <div class="cabecera-galeria__texto">
           <span class="eyebrow">Nosotros</span>

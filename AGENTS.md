@@ -8,13 +8,13 @@ dependencias: lo que hay en el repo es lo que se publica.
 
 | archivo | qué es |
 |---|---|
-| `index.html` | la narrativa del regalo |
-| `galeria.html` | el regalo de entrada, las fotos y el panel de subida |
+| `index.html` | la narrativa del regalo, que cierra con el regalo |
+| `galeria.html` | las fotos, directo, y el panel de subida |
 | `clave.html` | herramienta para generar el hash de la clave |
 | `styles.css` | todos los estilos |
 | `config.js` | fechas, hash de la clave y datos del repo de fotos |
 | `acceso.js` | el portón de la clave |
-| `app.js` | contadores, sobre, menú, tarjetas |
+| `app.js` | contadores, sobre, menú, tarjetas, y el regalo del final |
 | `galeria.js` | token, listado, compresión, subida, lightbox |
 | `clave.js` | generador de salt + hash |
 | `fuentes/` | Fraunces variable + licencia OFL |
@@ -33,14 +33,29 @@ dependencias: lo que hay en el repo es lo que se publica.
 - **La decoración es SVG inline**, un `<symbol id="lirio">` por página
   reusado con `<use href="#lirio">`. Nada de PNG ni librerías de íconos:
   así se recolorea con `currentColor` y no pesa.
+- **Los íconos van en el mismo sprite**, con ids `ico-*`, y la clase
+  `.ico` (22×22, sin relleno, `stroke: currentColor`, trazo 1.5, puntas
+  redondas). La clase se hereda hasta el `<use>`: cada lugar solo ajusta
+  tamaño y color. **Sin emojis ni cliparts.** Si se agrega un ícono,
+  va al sprite de la página y se usa con `<use>`.
 - **Los colores salen solo de las variables** del principio de
   `styles.css`. Si hace falta translúcido, `color-mix()` sobre la
   variable; no un hex suelto.
-- **Las fotos no están en el flujo**: `#galeria-contenido` arranca en
-  `display:none` y solo lo abre el botón `#regalo-saltear` («Ir a las
-  fotos»), que además salta a la galería y le pasa el foco al `h1`.
-  Abrir el regalo muestra el mensaje, **no** las fotos. Cualquier test
-  que toque la grilla tiene que tocar ese botón primero.
+- **Las fotos se ven directo**: no hay portada ni `data-visible`. Nada
+  tapa `#galeria-contenido`. Si se agrega un paso previo, hay cuatro
+  tests que lo van a notar.
+- **El regalo vive al final del index** (`#regalo-seccion`, después de
+  `#promesa` y los cupones, antes del pie), **no** en la galería. Su
+  lógica está en `app.js` (`iniciarRegalo`): `index.html` no carga
+  `galeria.js` y `galeria.html` no carga `app.js`, así que cada página
+  engancha solo lo suyo. Abrir el regalo muestra el mensaje y **no
+  mueve la caja**: `.regalo__mensaje` tiene la altura reservada.
+- **La marca M. vuelve al principio** (`#sobre`, la carta con los
+  contadores de días), no a la carta del final. En la galería apunta a
+  `index.html#sobre`.
+- **El menú tiene `overflow-y: auto`**: con los ocho íconos el contenido
+  mide más que una pantalla baja (medido: 607 px en 390×560). Si se
+  agregan ítems, sigue entrando.
 - **El ancla tiene que sobrevivir al portón**: con el sitio oculto el
   destino mide 0 y el navegador no puede scrollear. `acceso.js` repite
   el salto al mostrar el sitio; si se agrega otra forma de revelar el

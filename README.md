@@ -11,13 +11,13 @@ minutos y no hay preview.**
 
 | archivo | qué es |
 |---|---|
-| `index.html` | la narrativa: sobre, fechas, manual, canciones, carta, promesa |
-| `galeria.html` | las fotos y la subida desde el celular |
+| `index.html` | la narrativa: sobre, fechas, manual, canciones, carta, promesa y el regalo |
+| `galeria.html` | las fotos, directo, y la subida desde el celular |
 | `clave.html` | herramienta para generar el hash de una clave nueva |
 | `styles.css` | la hoja de estilos única (paleta nocturna) |
 | `config.js` | fechas, hash de la clave y datos del repo de fotos |
 | `acceso.js` | el portón de la clave (PBKDF2-SHA256) |
-| `app.js` | contadores, sobre, menú, tarjetas que se dan vuelta |
+| `app.js` | contadores, sobre, menú, tarjetas que se dan vuelta y el regalo |
 | `galeria.js` | token, listado, compresión, subida y lightbox |
 | `clave.js` | generador de salt + hash |
 | `fuentes/` | Fraunces variable, subset latino, con su licencia OFL |
@@ -32,17 +32,24 @@ python3 -m http.server 8765 --bind 127.0.0.1
 Y abrir <http://127.0.0.1:8765/>. No abrir con `file://`: el portón
 necesita WebCrypto y la galería necesita `fetch`.
 
+## El regalo, al final del recorrido
+
+El index cierra con una caja con un lirio en vez de moño. Al tocarla se
+destapa, sale una luz cálida y aparece **"Te amo, nunca lo dudes."**
+Abrirla **no es obligatorio** y no mueve nada de lugar: el mensaje tiene
+la altura reservada. Debajo queda **"Las fotos →"**, la continuación
+natural del recorrido. Al recargar, la caja vuelve a estar cerrada; si se
+toca de nuevo ya abierta, el mensaje se repite.
+
+El regalo es una sección más del index (`#regalo-seccion`), después de la
+promesa y los cupones, antes del pie. **No está en la galería.**
+
 ## La galería
 
-### Antes de las fotos: el regalo
+### Las fotos se ven directo
 
-La galería arranca con una portada: una caja con un lirio en vez de
-moño. Al tocarla se destapa, sale una luz cálida y aparece
-**"Te amo, nunca lo dudes."** Abrirla **no es obligatorio** y tampoco
-muestra las fotos: eso lo hace el botón **"Ir a las fotos →"**, que las
-abre y salta a ellas. Las fotos no ocupan lugar en la página hasta que
-se piden. Al recargar, la caja vuelve a estar cerrada; si se toca de
-nuevo ya abierta, el mensaje se repite.
+No hay portada que tape las fotos: al entrar se ve la grilla, o el aviso
+de que falta la llave. Nada que abrir primero.
 
 ### Cómo está armada
 
@@ -112,7 +119,8 @@ Paleta azul marino, en variables al principio de `styles.css`:
 | `--texto` | `#eaf0fa` | el texto | 16.73:1 |
 | `--tenue` | `#9fb2cd` | texto secundario | 8.87:1 |
 | `--acento` | `#a9c6ec` | detalles, foco, enlaces | 10.93:1 |
-| `--miel` | `#e0b878` | el sello, el corazón, el regalo | 10.31:1 |
+| `--miel` | `#e0b878` | el sello, el regalo | 10.31:1 |
+| `--celeste` | `#a8d8ea` | el corazón de «Made♥» | 12.48:1 |
 
 Los contrastes están medidos con la fórmula de WCAG contra `--fondo`:
 todos pasan AA (4.5:1) y AAA (7:1). No hay colores sueltos: los pocos
@@ -122,6 +130,17 @@ translúcidos se arman con `color-mix()` sobre las variables.
 reusado con `<use>`. Dos grandes en las esquinas del sobre y uno chico
 apoyado en la línea que separa las secciones. Se recolorean solos con
 `currentColor`; en mobile bajan la opacidad para no amontonarse.
+
+**Los íconos** siguen la misma idea: un sprite de `<symbol>` por página
+(`ico-sobre`, `ico-fechas`, …) reusado con `<use>`, y una clase base
+`.ico` que fija 22×22, sin relleno, `stroke: currentColor`, trazo 1.5 y
+puntas redondas. La clase se hereda hasta el `<use>`, así que cada lugar
+solo ajusta el tamaño y el color. Sin emojis, sin cliparts, sin
+librerías.
+
+**La marca M.** de la barra vuelve al principio (`#sobre`, la carta
+que cuenta cuántos días llevamos), no a la carta del final. En la
+galería apunta a `index.html#sobre`.
 
 ## Seguridad: qué protege qué
 
