@@ -1025,38 +1025,47 @@
     regaloMensaje.textContent = 'Te amo, nunca lo dudes.';
   }
 
-  // Las fotos ya están abajo; esto solo las pone a la vista de un salto.
+  // Las fotos no están en el flujo: esto las abre.
+  function mostrarGaleria() {
+    if (!galeriaCuerpo) return;
+    galeriaCuerpo.setAttribute('data-visible', 'si');
+    if (regaloSaltear) regaloSaltear.setAttribute('aria-expanded', 'true');
+  }
+
+  // Abre las fotos y salta a ellas. Es el único camino: abrir el
+  // regalo muestra el mensaje, no las fotos.
   function irALasFotos() {
     if (!galeriaCuerpo) return;
+
+    mostrarGaleria();
 
     var quieto = window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    galeriaCuerpo.scrollIntoView({
-      behavior: quieto ? 'auto' : 'smooth',
-      block: 'start'
-    });
+    // Un cuadro después del display:none → block: si se mide en el
+    // mismo, algunos motores calculan la posición con alto 0.
+    window.requestAnimationFrame(function () {
+      // El foco va antes del scroll: en iOS, enfocar durante un scroll
+      // suave lo cancela a mitad de camino.
+      var titulo = galeriaCuerpo.querySelector('h1');
+      if (titulo) {
+        titulo.setAttribute('tabindex', '-1');
+        titulo.focus({ preventScroll: true });
+      }
 
-    // El foco va al título para que el teclado y el lector de pantalla
-    // sigan desde acá y no desde el principio de la página.
-    var titulo = galeriaCuerpo.querySelector('h1');
-    if (titulo) {
-      titulo.setAttribute('tabindex', '-1');
-      titulo.focus({ preventScroll: true });
-    }
+      galeriaCuerpo.scrollIntoView({
+        behavior: quieto ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    });
   }
 
   function iniciarRegalo() {
-    // Sin el regalo en el HTML, las fotos se ven igual: no se esconde nada.
+    // Sin el regalo en el HTML, las fotos se abren igual con el botón.
     if (!regalo || !regaloAbrir || !regaloMensaje) return;
 
     regaloAbrir.addEventListener('click', abrirRegalo);
     if (regaloSaltear) regaloSaltear.addEventListener('click', irALasFotos);
-
-    if (regalo.getAttribute('data-abierto') === 'si') {
-      regaloAbrir.setAttribute('aria-expanded', 'true');
-      regaloMensaje.textContent = 'Te amo, nunca lo dudes.';
-    }
   }
 
   /* ============================================================

@@ -38,10 +38,11 @@ necesita WebCrypto y la galería necesita `fetch`.
 
 La galería arranca con una portada: una caja con un lirio en vez de
 moño. Al tocarla se destapa, sale una luz cálida y aparece
-**"Te amo, nunca lo dudes."** Abrirla **no es obligatorio**: las fotos
-están abajo igual y se llega bajando, o de un salto con **"Ir a las
-fotos →"**. Al recargar, la caja vuelve a estar cerrada; si se toca de
-nuevo ya abierta, el mensaje se repite sin tocar las fotos.
+**"Te amo, nunca lo dudes."** Abrirla **no es obligatorio** y tampoco
+muestra las fotos: eso lo hace el botón **"Ir a las fotos →"**, que las
+abre y salta a ellas. Las fotos no ocupan lugar en la página hasta que
+se piden. Al recargar, la caja vuelve a estar cerrada; si se toca de
+nuevo ya abierta, el mensaje se repite.
 
 ### Cómo está armada
 

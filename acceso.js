@@ -70,6 +70,36 @@
       // La galería escucha este evento para no pedir el token antes
       // de que se haya pasado el portón.
       document.dispatchEvent(new CustomEvent('regalo:listo'));
+
+      // Si la URL trae un ancla, el navegador ya la intentó resolver
+      // cuando el contenido estaba oculto y medía 0: no se movió. Se
+      // repite ahora, en el cuadro siguiente, ya con layout.
+      if (location.hash) window.requestAnimationFrame(irAlAncla);
+    }
+
+    function irAlAncla() {
+      var crudo = location.hash;
+      if (crudo.length < 2) return;
+
+      // getElementById y no querySelector: el hash puede traer caracteres
+      // escapados (%C3%B3) o ids que en CSS necesitan escape (#1carta).
+      var id;
+      try {
+        id = decodeURIComponent(crudo.slice(1));
+      } catch (error) {
+        id = crudo.slice(1);
+      }
+
+      var destino = document.getElementById(id);
+      if (!destino) return;
+
+      // Sin animación: el salto puede ser de miles de píxeles y, con
+      // scroll suave, se siente como que se traba a mitad de camino.
+      var raiz = document.documentElement;
+      var antes = raiz.style.scrollBehavior;
+      raiz.style.scrollBehavior = 'auto';
+      destino.scrollIntoView({ block: 'start' });
+      raiz.style.scrollBehavior = antes;
     }
 
     var cfg = typeof CONFIG !== 'undefined' ? CONFIG.acceso : null;

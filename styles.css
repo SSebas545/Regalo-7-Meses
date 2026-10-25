@@ -157,6 +157,8 @@ a {
 .seccion {
   padding-block: var(--bloque);
   border-top: 1px solid var(--borde);
+  /* La barra es fija: sin esto el ancla queda debajo de ella. */
+  scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top));
 }
 
 .seccion:first-of-type {
@@ -961,6 +963,15 @@ body.menu-abierto {
 
 /* ---------- animaciones ---------- */
 
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes subir {
   from {
     opacity: 0;
@@ -1003,17 +1014,17 @@ body.menu-abierto {
    ============================================================ */
 
 /* El alto no cambia al abrir: si cambia, la caja salta sola bajo el
-   dedo (medido: 124 px en 80 ms). La sección conserva su alto y el
-   mensaje reserva sus dos líneas desde el principio. */
+   dedo (medido: 124 px en 80 ms). Con flex:1 la sección ocupa el
+   espacio libre entre la barra y el pie, y ese alto no depende de si
+   el regalo está abierto. */
 .regalo {
   display: grid;
   justify-items: center;
   align-content: center;
   gap: 16px;
-  min-height: min(76svh, 620px);
+  flex: 1;
   padding: clamp(28px, 8vh, 76px) var(--lateral) clamp(16px, 4vh, 34px);
   text-align: center;
-  transition: padding 0.6s var(--ease-out);
 }
 
 .regalo__caja {
@@ -1173,7 +1184,21 @@ body.menu-abierto {
   animation: subir 0.7s var(--ease-out) both;
 }
 
-/* Abrir el regalo no es obligatorio: las fotos están abajo igual. */
+/* Las fotos no están en el flujo: se abren con «Ir a las fotos». */
+#galeria-contenido {
+  display: none;
+}
+
+#galeria-contenido[data-visible='si'] {
+  display: block;
+  /* Al menos una pantalla: así el salto desde el regalo puede dejarla
+     arriba de todo, aunque todavía no haya fotos. */
+  min-height: calc(100svh - var(--nav-h) - env(safe-area-inset-top));
+  /* Solo opacidad: si la animación mueve la caja, el salto calcula la
+     posición con esos 14 px de más y la deja corrida. */
+  animation: aparecer 0.45s var(--ease-out) both;
+}
+
 .regalo__saltear {
   min-height: 44px;
   padding: 0 18px;

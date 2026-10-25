@@ -36,10 +36,15 @@ dependencias: lo que hay en el repo es lo que se publica.
 - **Los colores salen solo de las variables** del principio de
   `styles.css`. Si hace falta translúcido, `color-mix()` sobre la
   variable; no un hex suelto.
-- **Abrir el regalo no es obligatorio**: `#galeria-contenido` está
-  siempre visible y el regalo es una portada con el mensaje. Si se
-  agrega una sección entre el regalo y las fotos, el botón
-  `#regalo-saltear` tiene que seguir llevando a la galería.
+- **Las fotos no están en el flujo**: `#galeria-contenido` arranca en
+  `display:none` y solo lo abre el botón `#regalo-saltear` («Ir a las
+  fotos»), que además salta a la galería y le pasa el foco al `h1`.
+  Abrir el regalo muestra el mensaje, **no** las fotos. Cualquier test
+  que toque la grilla tiene que tocar ese botón primero.
+- **El ancla tiene que sobrevivir al portón**: con el sitio oculto el
+  destino mide 0 y el navegador no puede scrollear. `acceso.js` repite
+  el salto al mostrar el sitio; si se agrega otra forma de revelar el
+  contenido, hay que repetirlo ahí también.
 - **Secretos**: el token de GitHub nunca va al repo, ni a la URL, ni
   a `localStorage`. Va en `sessionStorage` y se borra al cerrar la
   pestaña. La clave del portón es un hash con salt, no la clave.
